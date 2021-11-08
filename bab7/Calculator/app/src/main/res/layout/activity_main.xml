@@ -4,8 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="LabelFor"
     tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/txtResult"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="28dp"
+        android:ems="10"
+        android:text="0"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/btnEqual"
@@ -15,6 +29,7 @@
         android:layout_marginTop="15dp"
         android:onClick="calculate"
         android:text="@string/btnEqual"
+        android:textColor="#607D8B"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnD" />
@@ -51,6 +66,7 @@
         android:layout_marginTop="15dp"
         android:onClick="calculate"
         android:text="@string/btnSubtract"
+        android:textColor="#607D8B"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/btn6"
         app:layout_constraintTop_toBottomOf="@+id/btnPlus" />
@@ -77,7 +93,8 @@
         android:text="@string/btn0"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/btnD"
-        app:layout_constraintTop_toBottomOf="@+id/btn8" />
+        app:layout_constraintTop_toBottomOf="@+id/btn8"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <Button
         android:id="@+id/btnC"
@@ -199,19 +216,7 @@
         app:layout_constraintStart_toEndOf="@+id/btn1"
         app:layout_constraintTop_toBottomOf="@+id/txtResult" />
 
-    <EditText
-        android:id="@+id/txtResult"
-        android:layout_width="371dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="108dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:inputType="text"
-        android:text="@string/txtResult"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/btn1"
