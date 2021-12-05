@@ -1,6 +1,7 @@
 package id.ilmudata.mynote
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_note.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import id.ilmudata.mynote.databinding.ItemNoteBinding
 
-class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+//class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+class MyHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root)
 {
-    val myNote = itemView.myNote
-    val noteCreated = itemView.noteCreated
+    val myNote = binding.myNote
+    val noteCreated = binding.noteCreated
 
 
+    @SuppressLint("SimpleDateFormat")
     fun bind(item: Note, clickListener: OnItemClickListener)
     {
         val pattern = "dd MMM yyyy HH:mm:ss"
@@ -33,13 +37,17 @@ class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     }
 
 }
-class RecyclerAdapter(var items: MutableList<Note>,
-                      val itemClickListener: OnItemClickListener)
+class RecyclerAdapter(
+    private var items: MutableList<Note>,
+    private val itemClickListener: OnItemClickListener)
                     :RecyclerView.Adapter<MyHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): MyHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
-        return MyHolder(view)
+        return MyHolder(
+            ItemNoteBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        )
+//        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
+//        return MyHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -47,7 +55,7 @@ class RecyclerAdapter(var items: MutableList<Note>,
     }
 
     override fun onBindViewHolder(myHolder: MyHolder, position: Int) {
-        val item = items.get(position)
+        val item = items[position]
         myHolder.bind(item, itemClickListener)
     }
 

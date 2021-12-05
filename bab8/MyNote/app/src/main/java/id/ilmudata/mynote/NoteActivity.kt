@@ -4,27 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_item_note.*
 import java.util.*
+import id.ilmudata.mynote.databinding.ActivityItemNoteBinding
 
 class NoteActivity : AppCompatActivity() {
-    var note = Note("", Date())
+    private lateinit var binding: ActivityItemNoteBinding
+    private var note = Note("", Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_note)
+        binding = ActivityItemNoteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val btn = intent.getStringExtra("btn")
-        btnAdd.text = btn
+        binding.btnAdd.text = btn
         note = intent.getSerializableExtra("note") as Note
-        txtNewNote.setText(note.note)
+        binding.txtNewNote.setText(note.note)
 
     }
     fun submit(v: View) {
         val returnIntent = Intent()
-        note.note = txtNewNote.text.toString()
+        note.note = binding.txtNewNote.text.toString()
 
-        returnIntent.putExtra("btn",  btnAdd.text)
+        returnIntent.putExtra("btn",  binding.btnAdd.text)
         returnIntent.putExtra("note", note)
 
         setResult(RESULT_OK, returnIntent)

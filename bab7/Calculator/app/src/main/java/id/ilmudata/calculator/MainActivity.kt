@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
 
     private var actPlus: Boolean = false
     private var actMultiply: Boolean = false
-    private var actSubract: Boolean = false
+    private var actSubtract: Boolean = false
     private var actDivide: Boolean = false
     private var valueOne: Float = 0f
     private var valueTwo: Float = 0f
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.btnSubtract -> {
                 valueOne = binding.txtResult.text.toString().toFloat()
-                actSubract = true
+                actSubtract = true
                 binding.txtCache.text = valueOne.toString()
                 binding.txtResult.text = "0"
             }
@@ -82,10 +82,10 @@ class MainActivity : AppCompatActivity() {
                     binding.txtCache.text = ""
                     actMultiply = false
                 }
-                if(actSubract){
+                if(actSubtract){
                     binding.txtResult.text = ((valueOne - valueTwo).toString() + "")
                     binding.txtCache.text = ""
-                    actSubract = false
+                    actSubtract = false
                 }
             }
         }
