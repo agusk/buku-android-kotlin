@@ -18,18 +18,17 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: RecyclerAdapter
     private val notes = mutableListOf<Note>(
-        Note("Catatan 1", Date()),
-        Note("Catatan 2",Date()),
-        Note("Catatan 3",Date()),
-        Note("Catatan 4",Date()),
-        Note("Catatan 5",Date()))
+        Note(1,"Catatan 1", Date()),
+        Note(2,"Catatan 2",Date()),
+        Note(3,"Catatan 3",Date()),
+        Note(4,"Catatan 4",Date()),
+        Note(5,"Catatan 5",Date()))
 
     override fun onItemClicked(item: Note) {
         val intent = Intent(this, NoteActivity::class.java)
         intent.putExtra("btn","Edit")
         intent.putExtra("note",item)
 
-        //startActivityForResult(intent,1)
         getResult.launch(intent)
     }
 
@@ -44,21 +43,28 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val notesList = findViewById<RecyclerView>(R.id.myNote)
-        notesList.layoutManager = LinearLayoutManager(this)
+        binding.myNote.layoutManager = LinearLayoutManager(this)
         adapter = RecyclerAdapter(notes,this)
-        notesList.adapter = adapter
+        binding.myNote.adapter = adapter
     }
 
     fun addNewNote(v: View) {
         val intent = Intent(this, NoteActivity::class.java)
         intent.putExtra("btn","Tambah")
-        intent.putExtra("note",Note("", Date()))
+        intent.putExtra("note",Note(0,"", Date()))
 
         getResult.launch(intent)
-        //startActivityForResult(intent,1)
+    }
+    private fun getNewNoteId(): Int {
+        var id = 0
+        notes.forEach { item ->
+            if(item.id>id)
+                id = item.id
+        }
+        return id+1
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private val getResult =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -66,11 +72,12 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             if(it.resultCode == Activity.RESULT_OK){
                 val note: Note = it.data?.getSerializableExtra("note") as Note
 
-                if(it.data?.getStringExtra("btn")== "Tambah"){
+                if(note.id==0){
+                    note.id = getNewNoteId()
                     notes.add(note)
                     adapter.notifyDataSetChanged()
                 }else{
-                    val index = notes.indexOf(notes.first { e->e.created == note.created })
+                    val index = notes.indexOf(notes.first { e->e.id == note.id })
                     if(index>=0){
                         notes[index] = note
                         adapter.notifyDataSetChanged()
@@ -78,23 +85,5 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
                 }
             }
         }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(resultCode==RESULT_OK){
-            var note: Note = data?.getSerializableExtra("note") as Note
-            if(data?.getStringExtra("btn")== "Tambah"){
-                notes.add(note)
-                adapter.notifyDataSetChanged()
-            }else{
-                val index = notes.indexOf(notes.first { e->e.created == note.created })
-                if(index>=0){
-                    notes[index] = note
-                    adapter.notifyDataSetChanged()
-                }
-            }
-        }
-    }
 
 }

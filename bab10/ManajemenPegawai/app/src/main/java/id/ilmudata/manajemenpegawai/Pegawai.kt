@@ -2,7 +2,6 @@ package id.ilmudata.manajemenpegawai
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-import java.util.*
 
 data class Pegawai(
     @SerializedName("id") var id: Int,

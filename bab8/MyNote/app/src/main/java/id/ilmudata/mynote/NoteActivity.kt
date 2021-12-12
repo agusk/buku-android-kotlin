@@ -9,7 +9,7 @@ import id.ilmudata.mynote.databinding.ActivityItemNoteBinding
 
 class NoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityItemNoteBinding
-    private var note = Note("", Date())
+    private var note = Note(0,"", Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

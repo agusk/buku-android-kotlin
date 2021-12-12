@@ -3,19 +3,16 @@ package id.ilmudata.mynote
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_note.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import id.ilmudata.mynote.databinding.ItemNoteBinding
 
-//class MyHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 class MyHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root)
 {
     val myNote = binding.myNote
-    val noteCreated = binding.noteCreated
+    private val noteCreated = binding.noteCreated
 
 
     @SuppressLint("SimpleDateFormat")
@@ -30,7 +27,7 @@ class MyHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(b
         itemView.setOnClickListener {
             clickListener.onItemClicked(item)
         }
-        itemView.btnDelete.setOnClickListener{
+        binding.btnDelete.setOnClickListener{
             clickListener.onItemDeleteClicked(item)
         }
 
@@ -46,8 +43,6 @@ class RecyclerAdapter(
         return MyHolder(
             ItemNoteBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         )
-//        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
-//        return MyHolder(view)
     }
 
     override fun getItemCount(): Int {

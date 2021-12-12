@@ -1,72 +1,68 @@
 package id.ilmudata.myselfiephoto
 
-import android.R.attr.bitmap
-import android.R.attr.mimeType
+import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.OutputStream
 
+import id.ilmudata.myselfiephoto.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    val REQUEST_IMAGE_CAPTURE = 1
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
-    fun takePicture(v: View) {
+    fun takePicture() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            getResult.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
-            // display error state to the user
-            Log.e("MY_SELFIE_", e.message)
+            e.message?.let { Log.e("MY_SELFIE_", it) }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    @SuppressLint("NotifyDataSetChanged")
+    private val getResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ){
 
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            val img: ImageView = findViewById<ImageView>(R.id.imgPhoto)
-            img.setImageBitmap(imageBitmap)
+            if (it.resultCode == RESULT_OK) {
+                val imageBitmap = it.data?.extras?.get("data") as Bitmap
+                binding.imgPhoto.setImageBitmap(imageBitmap)
+            }
         }
-    }
 
-    fun getRandomString(length: Int) : String {
+    private fun getRandomString(length: Int) : String {
         val charset = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz0123456789"
         return (1..length)
             .map { charset.random() }
             .joinToString("")
     }
 
-    fun savePicture(v: View) {
-        val imageview: ImageView = findViewById<ImageView>(R.id.imgPhoto)
-        val b: Bitmap = (imageview.getDrawable() as BitmapDrawable).bitmap
+    fun savePicture() {
+        val b: Bitmap = (binding.imgPhoto.getDrawable() as BitmapDrawable).bitmap
 
         val cw = ContextWrapper(applicationContext)
         val directory: File = cw.getDir("imageDir", Context.MODE_PRIVATE)
         val file = File(directory, "img_" + getRandomString(5) + ".jpg")
         if (!file.exists()) {
             Log.d("MY_SELFIE_", file.toString())
-            var fos: FileOutputStream? = null
             try {
-                fos = FileOutputStream(file)
+                val fos = FileOutputStream(file)
                 b.compress(Bitmap.CompressFormat.JPEG, 100, fos)
                 fos.flush()
                 fos.close()
