@@ -68,22 +68,26 @@ class MainActivity : AppCompatActivity() {
             R.id.btnEqual -> {
                 valueTwo = binding.txtResult.text.toString().toFloat()
                 if(actPlus){
-                    binding.txtResult.text = ((valueOne + valueTwo).toString() + "")
+                    val result : String = "${(valueOne + valueTwo)}"
+                    binding.txtResult.text = result
                     binding.txtCache.text = ""
                     actPlus = false
                 }
                 if(actDivide){
-                    binding.txtResult.text = ((valueOne / valueTwo).toString() + "")
+                    val result : String = "${(valueOne / valueTwo)}"
+                    binding.txtResult.text = result
                     binding.txtCache.text = ""
                     actDivide = false
                 }
                 if(actMultiply){
-                    binding.txtResult.text = ((valueOne * valueTwo).toString() + "")
+                    val result : String = "${(valueOne * valueTwo)}"
+                    binding.txtResult.text = result
                     binding.txtCache.text = ""
                     actMultiply = false
                 }
                 if(actSubtract){
-                    binding.txtResult.text = ((valueOne - valueTwo).toString() + "")
+                    val result : String = "${(valueOne - valueTwo)}"
+                    binding.txtResult.text = result
                     binding.txtCache.text = ""
                     actSubtract = false
                 }
