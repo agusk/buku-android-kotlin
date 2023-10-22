@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
-    fun sendNotification(v: View){
+    fun sendNotification(view: View){
 
         val intent = Intent(this, AfterNotificationActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)

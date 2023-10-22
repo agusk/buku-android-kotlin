@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    fun takePicture() {
+    fun takePicture(view: View) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             getResult.launch(takePictureIntent)
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             .joinToString("")
     }
 
-    fun savePicture() {
+    fun savePicture(view: View) {
         val b: Bitmap = (binding.imgPhoto.getDrawable() as BitmapDrawable).bitmap
 
         val cw = ContextWrapper(applicationContext)
@@ -72,4 +73,6 @@ class MainActivity : AppCompatActivity() {
         }
         Toast.makeText(this,"Gambar telah disimpan", Toast.LENGTH_LONG).show()
     }
+
+
 }
