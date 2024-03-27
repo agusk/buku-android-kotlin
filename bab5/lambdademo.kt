@@ -17,5 +17,10 @@ fun main(args: Array<String>) {
     }
     calculate(10, 5)
 
+    // lambda functions with return value
+    val sum = { num: Int, num2: Int -> 
+        num + num2
+    }
+
 
 }

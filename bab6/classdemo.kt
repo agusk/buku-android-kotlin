@@ -23,6 +23,8 @@ class City(id: Int = 0,name: String = "") { // constructor
             if (value >= 0) field = value
         }
 
+    
+
     // constructor
     init {
         this.id = id    
@@ -40,7 +42,7 @@ class City(id: Int = 0,name: String = "") { // constructor
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
 
     var f = Foo()
     f.show()
